@@ -20,7 +20,7 @@ def make_request(prompt):
     }
 
     try:
-        responses = requests.post(URL, headers=HEADER, data=json.dumps(data))
+        responses = requests.post(URL, headers=HEADER, json=data)
         responses.raise_for_status()
     except requests.exceptions.RequestException as e:
         return f"Error sending request: {e}"
