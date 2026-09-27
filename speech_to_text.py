@@ -26,8 +26,7 @@ def make_request(prompt):
         return f"Error sending request: {e}"
 
     if responses.status_code == 200:
-        response_text = responses.text
-        data = json.loads(response_text)
+        data = responses.json()
         actual_response = data['response']
         actual_response = re.sub(r'\d', '', actual_response)
         return actual_response
