@@ -51,8 +51,9 @@ def recognize_speech():
         raise Exception("Sorry, could not recognize your voice")
 
 # Initialize the text-to-speech engine
+engine = tts.init()
+
 def text_to_speech(prompt):
-    engine = tts.init()
     engine.say(prompt)
     engine.runAndWait()
 
