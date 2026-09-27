@@ -6,6 +6,9 @@ import json
 import pyttsx3 as tts
 import speech_recognition as sr
 
+# Initialize a session for HTTP Keep-Alive connection pooling
+session = requests.Session()
+
 # Constants
 URL = "http://localhost:11434/api/generate"
 HEADER = {
@@ -20,7 +23,7 @@ def make_request(prompt):
     }
 
     try:
-        responses = requests.post(URL, headers=HEADER, data=json.dumps(data))
+        responses = session.post(URL, headers=HEADER, data=json.dumps(data))
         responses.raise_for_status()
     except requests.exceptions.RequestException as e:
         return f"Error sending request: {e}"
