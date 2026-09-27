@@ -34,9 +34,17 @@ def make_request(prompt):
     else:
         return responses.status_code, responses.text
 
-def recognize_speech():
-    r = sr.Recognizer()
+# Initialize recognizer and microphone once at module level
+r = sr.Recognizer()
+mic = None
+try:
     mic = sr.Microphone()
+except OSError:
+    print("Warning: No default microphone found.")
+
+def recognize_speech():
+    if not mic:
+        raise Exception("Microphone not available")
 
     with mic as source:
         print("Say something")
@@ -50,9 +58,18 @@ def recognize_speech():
     except:
         raise Exception("Sorry, could not recognize your voice")
 
-# Initialize the text-to-speech engine
-def text_to_speech(prompt):
+# Initialize the text-to-speech engine once at module level
+engine = None
+try:
     engine = tts.init()
+except Exception as e:
+    print(f"Warning: TTS engine could not be initialized: {e}")
+
+def text_to_speech(prompt):
+    if not engine:
+        print(f"TTS (disabled): {prompt}")
+        return
+
     engine.say(prompt)
     engine.runAndWait()
 
