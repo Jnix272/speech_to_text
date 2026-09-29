@@ -55,7 +55,7 @@ def recognize_speech():
         text = r.recognize_google(audio)
         print("You said: {}".format(text))
         return text
-    except:
+    except Exception:
         raise Exception("Sorry, could not recognize your voice")
 
 # Initialize the text-to-speech engine once at module level
